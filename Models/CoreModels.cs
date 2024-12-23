@@ -1,26 +1,11 @@
 ﻿using System.Xml;
-using static PublicMessageWebsite.Models.CoreModel.FilePath;
+using static PublicMessageWebsite.FilePath;
+using static PublicMessageWebsite.DataCore;
 
 namespace PublicMessageWebsite.Models
 {
     public class CoreModel
     {
-		public struct FilePath
-		{
-			public const string dataDir = "pmw_data/";
-			public const string logDir = dataDir + "logs/";
-			public const string messageDir = dataDir + "messages/";
-
-			public const string configFile = dataDir + "config.xml";
-			public static string LogFile()
-			{
-				return $"{logDir}{DateTime.Now:yyyy-MM-dd}.log";
-			}
-			public static string MessageFile(DateTime? date=null) { 
-				if(date == null) date = DateTime.Now;
-				return $"{messageDir}{date:yyyy-MM-dd}.xml";
-			}
-		}
 		public struct FileEditer
 		{
 			static string GetNowTime()
@@ -36,13 +21,16 @@ namespace PublicMessageWebsite.Models
 			{
 				logFile_time = DateTime.Now.Day;
 				logWriter?.Close();
-				logWriter = new(LogFile(),true);
+				logWriter = new(LogFile,true);
 			}
-			public static void LogAdd(string log)
+			public async static void LogAddAsync(string log)
 			{
 				if(DateTime.Now.Day!=logFile_time) LogWriter_Reload();//如果当前日期不等于日志的日期编号，则新建日志
-				logWriter?.WriteLine($"[{GetNowTime()}] {log}");
-				logWriter?.Flush();
+				string outputMsg = $"[{GetNowTime()}] {log}";				
+				if(DataCore.DataFiles.config.DebugOutput)
+					Console.WriteLine(outputMsg);
+				await logWriter?.WriteLineAsync(outputMsg)!;
+				await logWriter?.FlushAsync()!;
 			}
 			static XmlDocument? msgfile_xmlDoc;
 			static	XmlNode? msgfile_message_xmlRoot;
@@ -205,70 +193,6 @@ nothing:;
 			}
 		}
 
-			public struct PageInfo
-        {
-            public static string webTitle = "null";
-            public static string textTitle = "欢迎来到公共留言页面，在此留下你想说的话:";
-			public static string bottomText = "请勿发送任何违法内容！";
-        }       
-		public struct Config
-		{
-			/// <summary>
-			/// 每一个ip在当前周期内可添加留言的次数
-			/// </summary>
-			public static int IpAddMsgFrequency = 5;
-			/// <summary>
-			/// 是否启用 X-Forwarded-For(XFF)请求标头
-			/// </summary>
-			public static bool useXFFRequestHeader = false;
-			/// <summary>
-			/// API输出留言包含的天数，可输出历史多少天的留言
-			/// </summary>
-			public static int ApiOutputMsgDay = 1;
-		}
-
-        public struct UseUrlValue
-        {
-            public static bool isHttps = false;
-            public static string addr = "*";
-            ///<summary>
-            ///urlRoot不能只包含单独的斜杠，这里只是起到占位的作用，到引用的时候单独的斜杠会被去掉。<br/>
-            ///在包含内容的时候，urlRoot前面必须包含斜杠，末尾不能含有斜杠
-            ///</summary>
-            public static string urlRoot = "/";
-            public static string port = "80";
-            public static string Get()
-            {
-                string head;
-
-                if (isHttps)
-                    head = "https";
-                else
-                    head = "http";
-
-
-                return $"{head}://{addr}:{port}";
-            }
-            /// <summary>
-            /// 获取UrlRoot的格式化后的值
-            /// </summary>
-            /// <returns></returns>
-            public static string GetUrlRoot()
-            {
-                string urlRoot_;
-                if (urlRoot == "/") urlRoot_ = "";//urlRoot不能只包含单独的斜杠
-                else if (urlRoot == "") { urlRoot_ = urlRoot; }//如果为空则直接输出
-                else
-                {
-                    if (urlRoot[..1] == "/")
-                        urlRoot_ = urlRoot;
-                    else//如果开头没有斜杠则加上斜杠
-                        urlRoot_ = "/" + urlRoot;
-                    if (urlRoot_.Substring(urlRoot_.Length - 1, 1) == "/")//如果末尾包含斜杠则去掉
-                        urlRoot_ = urlRoot_[..(urlRoot_.Length - 1)];
-                }
-                return urlRoot_;
-            }
-        }
+			
     }
 }

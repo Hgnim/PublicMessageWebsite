@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using static PublicMessageWebsite.Models.CoreModel;
+using static PublicMessageWebsite.DataCore;
 
 namespace PublicMessageWebsite.Controllers
 {
@@ -8,7 +9,7 @@ namespace PublicMessageWebsite.Controllers
 
         public IActionResult Index()
         {
-			FileEditer.LogAdd($"[{GetClientIP()}]获取[InputMsg/Index]页面");            
+			FileEditer.LogAddAsync($"[{GetClientIP()}]获取[InputMsg/Index]页面");            
             return View("Index");
         }
 
@@ -44,27 +45,28 @@ namespace PublicMessageWebsite.Controllers
                 ViewBag.inputBoxValue = inputBox;
                 ViewBag.nameBoxValue = nameBox;
             }
-            FileEditer.LogAdd
+            FileEditer.LogAddAsync
             ($"[{GetClientIP()}]点击了[InputMsg/Index]页面的发送按钮。发送内容: {{留言: {inputBox}; 署名: {nameBox}}}。返回代码: {msgaddBackValue}");
             if(msgaddBackValue==0)
-                return Redirect(UseUrlValue.GetUrlRoot()+"/InputMsg/SendSucceed");
+                return Redirect(UrlPath.SendSucceed);
             else
             return View("Index");            
         }
         [HttpPost]
         public IActionResult BackMain()
         {
-            return Redirect(UseUrlValue.GetUrlRoot() + "/");
+            return Redirect(UrlPath.RootUrl);
         }
         [Route("api")]
         public string Api()
         {
-            return FileEditer.MessageGet();
+			FileEditer.LogAddAsync($"[{GetClientIP()}]调用了留言信息获取的api");
+			return FileEditer.MessageGet();
         }
 
         string GetClientIP()
         {
-            if (Config.useXFFRequestHeader)
+            if (Config.UseXFFRequestHeader)
                 return Request.Headers["X-Forwarded-For"].ToString();
             else
                 return HttpContext.Connection.RemoteIpAddress!.ToString();

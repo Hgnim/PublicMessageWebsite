@@ -5,7 +5,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 
-	  <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled><!--禁用静态Web资产以阻止发布时生成.staticwebassets.endpoints.json文件-->
+	  <!--禁用静态Web资产以阻止发布时生成.staticwebassets.endpoints.json文件-->
+	  <!--怀疑禁用后无法读取wwwroot下已被更改的图片文件-->
+	  <!--<StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>-->
 
 	  <AssemblyVersion>1.4.0.1223</AssemblyVersion>
 	  <FileVersion>1.4.0.1223</FileVersion>

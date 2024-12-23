@@ -143,7 +143,14 @@ namespace PublicMessageWebsite {
 		internal static string BackMain => $"{UseUrlValue.UrlRoot}/InputMsg/BackMain";
 		internal static string SendSucceed => $"{UseUrlValue.UrlRoot}/InputMsg/SendSucceed";
 		internal struct Img {
-			internal static string Icon=> $"{UseUrlValue.UrlRoot}{DataCore.DataFiles.config.Config.WebIcon}";
+			internal static string Icon { 
+				get {
+					if (DataFiles.config.Config.WebIcon[..4] == "http") 
+						return DataFiles.config.Config.WebIcon;
+					else
+					return $"{UseUrlValue.UrlRoot}{DataFiles.config.Config.WebIcon}"; 
+				} 
+			}
 		}
 		internal struct Css {
 			private static string Dir => $"{UseUrlValue.UrlRoot}/css/";

@@ -1,0 +1,27 @@
+﻿@using static PublicMessageWebsite.Models.CoreModel
+<head>
+	<title>@PageInfo.webTitle</title>
+	<link rel="icon" href="/icon.png" type="image/x-icon">
+</head>
+<body>
+	<div style="width:580px;height:auto;top: calc(50% - 120px);left: calc(50% - 290px);position: absolute;text-align:center">
+	<h4>@PageInfo.textTitle</h4>
+	<form method="post" action="@UseUrlValue.GetUrlRoot()/InputMsg/SubmitMsg">		
+		<div>
+			<label>留言：</label>
+				<input type="text" name="inputBox" value="@ViewData["inputBoxValue"]" autoComplete="off" />
+		</div>
+		<div>
+			<label>署名：</label>
+				<input type="text" name="nameBox" value="@ViewData["nameBoxValue"]" autoComplete="on" />
+		</div>
+		<br/>
+		<button type="submit">发送</button>
+		<br />
+		<p>@ViewData["outputText"]</p>
+	</form>
+	</div>
+	<div style="position: absolute;bottom: 0px;width:200px; left: calc(50% - 100px);text-align:center">
+		<h6>@PageInfo.bottomText</h6>
+	</div>
+</body>

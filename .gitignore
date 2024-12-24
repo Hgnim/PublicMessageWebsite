@@ -1,0 +1,9 @@
+.vs
+*/bin
+*/obj
+*/Properties
+*/appsettings*.json
+*.csproj.user
+*/.config
+
+*/pmw_data

@@ -4,7 +4,7 @@ using static PublicMessageWebsite.DataCore;
 
 namespace PublicMessageWebsite {
 	internal struct PInfo {
-		internal const string version = "1.4.0.20241223";
+		internal const string version = "1.4.1.20241225";
 		internal const string version_addV = $"V{version}";
 		internal const string copyright = "Copyright (C) 2024 Hgnim, All rights reserved.";
 		internal const string githubUrl = "https://github.com/Hgnim/PublicMessageWebsite";
@@ -20,7 +20,7 @@ namespace PublicMessageWebsite {
 					WebTitle= "公共留言页面",
 					WebIcon="/icon.png",
 					Title= "欢迎来到公共留言页面，在此留下你想说的话:",
-					BottomText = "请勿发送任何违法内容！\r\n" + PInfo.githubUrl_addHead,
+					BottomText = "请勿发送任何违法内容！" + PInfo.githubUrl_addHead,
 					OneIpAddMessageFrequency =5,
 					ApiOutputMsgDay = 1
 				},

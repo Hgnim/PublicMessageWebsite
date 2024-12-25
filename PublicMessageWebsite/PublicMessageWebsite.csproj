@@ -6,12 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
 	  <!--禁用静态Web资产以阻止发布时生成.staticwebassets.endpoints.json文件-->
-	  <!--怀疑禁用后无法读取wwwroot下已被更改的图片文件-->
-	  <!--<StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>-->
+	  <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
 
-	  <AssemblyVersion>1.4.0.1223</AssemblyVersion>
-	  <FileVersion>1.4.0.1223</FileVersion>
-	  <Version>1.4.0.20241223</Version>
+	  <AssemblyVersion>1.4.1.1225</AssemblyVersion>
+	  <FileVersion>1.4.1.1225</FileVersion>
+	  <Version>1.4.1.20241225</Version>
 
 	  <Title>公共留言网页</Title>
 	  <Company>Hgnim</Company>

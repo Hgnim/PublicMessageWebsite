@@ -5,7 +5,7 @@
 	<link rel="icon" href="@Img.Icon" type="image/x-icon">
 	<script src="@Js.InputMsg.Index" type="text/javascript"></script>
 </head>
-<body>
+<body style="overflow:hidden"> 
 	<div style="width:580px;height:auto;top: calc(50% - 120px);left: calc(50% - 290px);position: absolute;text-align:center">
 	<h4>@PageInfo.TextTitle</h4>
 	<form method="post" action="@SubmitMsg">		
@@ -23,7 +23,7 @@
 		<p>@ViewData["outputText"]</p>
 	</form>
 	</div>
-	<div style="position: absolute;bottom: 0px;width:200px; left: calc(50% - 100px);text-align:center">
+	<div style="position: absolute;bottom: 0px;width:100%;text-align:center">
 		<h6>@PageInfo.BottomText</h6>
 	</div>
 </body>

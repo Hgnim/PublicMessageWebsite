@@ -119,7 +119,7 @@ namespace PublicMessageWebsite
             }*/
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
 
             app.UseRouting();
 

@@ -8,9 +8,9 @@
 	  <!--禁用静态Web资产以阻止发布时生成.staticwebassets.endpoints.json文件-->
 	  <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
 
-	  <AssemblyVersion>1.4.1.1225</AssemblyVersion>
-	  <FileVersion>1.4.1.1225</FileVersion>
-	  <Version>1.4.1.20241225</Version>
+	  <AssemblyVersion>1.4.2.1231</AssemblyVersion>
+	  <FileVersion>1.4.2.1231</FileVersion>
+	  <Version>1.4.2.20241231</Version>
 
 	  <Title>公共留言网页</Title>
 	  <Company>Hgnim</Company>
@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\*">
+    <Content Update="wwwroot\img\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\js\InputMsg\*">

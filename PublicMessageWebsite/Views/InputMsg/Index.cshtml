@@ -3,6 +3,7 @@
 <head>
 	<title>@PageInfo.WebTitle</title>
 	<link rel="icon" href="@Img.Icon" type="image/x-icon">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="@Js.InputMsg.Index" type="text/javascript"></script>
 </head>
 <body style="overflow:hidden"> 
@@ -23,7 +24,14 @@
 		<p>@ViewData["outputText"]</p>
 	</form>
 	</div>
-	<div style="position: absolute;bottom: 0px;width:100%;text-align:center">
-		<h6>@PageInfo.BottomText</h6>
+	<style>
+		p{
+			margin: 1px;
+			font-size: 0.9rem;
+		}
+	</style>
+	<div style="position: absolute;bottom: 2px;width:100%;text-align:center">
+		<p>@PageInfo.BottomText</p>
+		<p>@PageInfo.BottomText2</p>
 	</div>
 </body>

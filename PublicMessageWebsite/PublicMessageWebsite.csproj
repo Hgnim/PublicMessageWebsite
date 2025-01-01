@@ -8,15 +8,15 @@
 	  <!--禁用静态Web资产以阻止发布时生成.staticwebassets.endpoints.json文件-->
 	  <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
 
-	  <AssemblyVersion>1.4.2.1231</AssemblyVersion>
-	  <FileVersion>1.4.2.1231</FileVersion>
-	  <Version>1.4.2.20241231</Version>
+	  <AssemblyVersion>1.4.3.0101</AssemblyVersion>
+	  <FileVersion>1.4.3.0101</FileVersion>
+	  <Version>1.4.3.20250101</Version>
 
 	  <Title>公共留言网页</Title>
 	  <Company>Hgnim</Company>
 	  <Product>PublicMessageWebsite</Product>
 	  <Description>公共留言网页</Description>
-	  <Copyright>Copyright (C) 2024 Hgnim, All rights reserved.</Copyright>
+	  <Copyright>Copyright (C) 2024-2025 Hgnim, All rights reserved.</Copyright>
 	  <AssemblyName>pmw_server</AssemblyName>
   </PropertyGroup>
 

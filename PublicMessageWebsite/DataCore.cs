@@ -4,9 +4,9 @@ using static PublicMessageWebsite.DataCore;
 
 namespace PublicMessageWebsite {
 	internal struct PInfo {
-		internal const string version = "1.4.2.20241231";
+		internal const string version = "1.4.3.20250101";
 		internal const string version_addV = $"V{version}";
-		internal const string copyright = "Copyright (C) 2024 Hgnim, All rights reserved.";
+		internal const string copyright = "Copyright (C) 2024-2025 Hgnim, All rights reserved.";
 		internal const string githubUrl = "https://github.com/Hgnim/PublicMessageWebsite";
 		internal const string githubUrl_addHead = $"Github: {githubUrl}";
 	}
@@ -20,7 +20,8 @@ namespace PublicMessageWebsite {
 					WebTitle= "公共留言页面",
 					WebIcon="/img/icon.png",
 					Title= "欢迎来到公共留言页面，在此留下你想说的话:",
-					BottomText = "请勿发送任何违法内容！" + PInfo.githubUrl_addHead,
+					BottomText = "请勿发送任何违法内容！",
+					BottomText2 = $"{PInfo.githubUrl_addHead}",
 					OneIpAddMessageFrequency =5,
 					ApiOutputMsgDay = 1
 				},
@@ -39,6 +40,7 @@ namespace PublicMessageWebsite {
 			public static string WebTitle => DataFiles.config.Config.WebTitle;
 			public static string TextTitle => DataFiles.config.Config.Title;
 			public static string BottomText => DataFiles.config.Config.BottomText;
+			public static string BottomText2 => DataFiles.config.Config.BottomText2;
 		}
 		public struct Config {
 			/// <summary>
@@ -104,6 +106,7 @@ namespace PublicMessageWebsite {
 				public required string WebIcon { get; set; }
 				public required string Title { get; set; }
 				public required string BottomText { get; set; }
+				public required string BottomText2 { get; set; }
 				public required int OneIpAddMessageFrequency { get; set; }
 				public required int ApiOutputMsgDay { get; set; }
 			}

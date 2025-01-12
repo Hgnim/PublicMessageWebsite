@@ -5,7 +5,7 @@ using static PublicMessageWebsite.DataCore;
 
 namespace PublicMessageWebsite {
 	internal struct PInfo {
-		internal const string version = "1.4.3.20250101";
+		internal const string version = "1.5.3.20250112";
 		internal const string version_addV = $"V{version}";
 		internal const string copyright = "Copyright (C) 2024-2025 Hgnim, All rights reserved.";
 		internal const string githubUrl = "https://github.com/Hgnim/PublicMessageWebsite";

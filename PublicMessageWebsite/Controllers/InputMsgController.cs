@@ -3,6 +3,7 @@ using static PublicMessageWebsite.Models.CoreModel;
 using static PublicMessageWebsite.DataCore;
 using PublicMessageWebsite.Models;
 using static PublicMessageWebsite.Models.InputMsgModels;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PublicMessageWebsite.Controllers
 {
@@ -14,7 +15,11 @@ namespace PublicMessageWebsite.Controllers
 			FileEditer.LogAddAsync($"[{GetClientIP()}]获取[InputMsg/Index]页面");            
             return View("Index");
         }
-        [HttpPost]
+        public IActionResult MessageList() {
+			FileEditer.LogAddAsync($"[{GetClientIP()}]获取[InputMsg/MessageList]页面");
+			return View(); 
+        }
+		[HttpPost]
         public IActionResult SubmitMsg([FromBody] SubmitMsgModel data)
         {
             int retValue=-1;
@@ -46,11 +51,24 @@ namespace PublicMessageWebsite.Controllers
 
 			return Json(new { value = retValue});//未知错误
 		}
-        [Route("api")]
+        [HttpGet]
+        public IActionResult GetMessageList() {
+            FileEditer.MessageInfo[] mis=FileEditer.GetAllMessage();
+            string md =
+@"|留言内容|署名|留言时间|
+|:-:|:-:|:-:|";
+            foreach( FileEditer.MessageInfo mi in mis ) {
+                md += $"\n|{mi.Message}|{mi.Name}|{mi.Time?.ToString("MM/dd HH:mm:ss.fff")}";
+			}
+			FileEditer.LogAddAsync
+			($"[{GetClientIP()}]获取了所有有效期内的留言列表");
+			return Json(new {markdown=md});
+		}
+		[Route("api")]
         public string Api()
         {
 			FileEditer.LogAddAsync($"[{GetClientIP()}]调用了留言信息获取的api");
-			return FileEditer.MessageGet();
+			return FileEditer.MessageRandomGet(DataCore.DataFiles.config.Config.ApiFormat);
         }
 
 		string GetClientIP() => 

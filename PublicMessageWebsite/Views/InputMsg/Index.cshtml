@@ -1,6 +1,10 @@
 ﻿@using static PublicMessageWebsite.DataCore;
 @using static PublicMessageWebsite.DataCore.DataFiles;
 @using static PublicMessageWebsite.UrlPath;
+@{
+	string str1 = $"留言有效期: {DataFiles.config.Config.ApiOutputMsgDay}天";
+	string str2 = $"每日可发送的留言数量: {DataFiles.config.Config.OneIpAddMessageFrequency}条";
+}
 <head>
 	<title>@config.Config.WebTitle</title>
 	<link rel="icon" href="@Img.Icon" type="image/x-icon">
@@ -17,8 +21,9 @@
 	<script src="@Js.InputMsg.Index" type="text/javascript"></script>
 
 	<script>
-		var theUrlRoot = "@config.Website.UrlRoot";
-		var bottomText="@config.Config.BottomText"
+		const theUrlRoot = "@config.Website.UrlRoot";
+		const submitMsg_url="@SubmitMsg";
+		const bottomText="@config.Config.BottomText";
 	</script>
 </head>
 <body style="overflow:hidden"> 
@@ -26,16 +31,20 @@
 		<h4>@config.Config.Title</h4>
 		<div>
 			<label>留言：</label>
-				<input type="text" name="inputBox" id="inputBox" autoComplete="off" />
+				<input type="text" id="inputBox" autoComplete="off" />
 		</div>
-		<div>
+		<div class="keepRight">
 			<label>署名：</label>
-				<input type="text" name="nameBox" id="nameBox" autoComplete="on" />
+				<input type="text" id="nameBox" autoComplete="on" />
 		</div>
 		<br/>
 		<button type="submit" onclick="sendButton_Click()">发送</button>
 		<br />
-		<p>@ViewData["outputText"]</p>
+		<div>
+			<p>@str1</p>
+			<p>@str2</p>
+		</div>
+		<a href="@MessageList">留言列表</a>
 	</div>
 	<div id="bottomBox"></div>
 </body>

@@ -32,7 +32,7 @@ function sendButton_Click() {
         outputToast(3);
     else {
         $.ajax({
-            url: theUrlRoot + '/InputMsg/SubmitMsg',
+            url: submitMsg_url,
             type: "POST",
             contentType: "application/json",
             setTimeout: 10000,
@@ -52,6 +52,11 @@ function sendButton_Click() {
 }
 document.addEventListener('DOMContentLoaded', function () {
     {
+        document.getElementById("inputBox").addEventListener('keydown', function (event) {
+            if (event.key === 'Enter')
+                sendButton_Click();
+        });
+
         var unValue = getCookie('userName');
         if (unValue != null)
             document.getElementById("nameBox").value = unValue;

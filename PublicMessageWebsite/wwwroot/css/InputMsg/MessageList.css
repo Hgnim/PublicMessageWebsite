@@ -1,0 +1,29 @@
+﻿table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+tr {
+    border: 1px solid #000;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.mainBox {
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+.leftTop{
+    position:absolute;
+    top:6px;
+    left:6px;
+    z-index:1;
+}

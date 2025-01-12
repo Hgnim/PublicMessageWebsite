@@ -139,8 +139,8 @@ namespace PublicMessageWebsite {
 	internal struct UrlPath {
 		internal static string RootUrl => UseUrlValue.UrlRoot + "/";
 		internal static string SubmitMsg => UseUrlValue.UrlRoot + "/InputMsg/SubmitMsg";
-		internal static string BackMain => $"{UseUrlValue.UrlRoot}/InputMsg/BackMain";
-		internal static string SendSucceed => $"{UseUrlValue.UrlRoot}/InputMsg/SendSucceed";
+		internal static string MessageList => UseUrlValue.UrlRoot + "/InputMsg/MessageList";
+		internal static string GetMessageList => UseUrlValue.UrlRoot + "/InputMsg/GetMessageList";
 		internal struct Img {
 			internal static string Icon { 
 				get {
@@ -156,6 +156,7 @@ namespace PublicMessageWebsite {
 			internal struct InputMsg {
 				private static string Dir => $"{RootDir}InputMsg/";
 				internal static string Index => $"{Dir}Index.css";
+				internal static string MessageList => $"{Dir}MessageList.css";
 			}
 		}
 		internal struct Js {
@@ -163,6 +164,7 @@ namespace PublicMessageWebsite {
 			internal struct InputMsg {
 				private static string Dir => $"{RootDir}InputMsg/";
 				internal static string Index => $"{Dir}Index.js";
+				internal static string MessageList => $"{Dir}MessageList.js";
 			}
 		}
 	}
@@ -177,6 +179,11 @@ namespace PublicMessageWebsite {
 		internal static string LogFile{
 			get=> $"{logDir}{DateTime.Now:yyyy-MM-dd}.log";
 		}
+		/// <summary>
+		/// 将日期转换为MessageFile文件名的格式，或获取当天的MessageFile文件
+		/// </summary>
+		/// <param name="date">日期</param>
+		/// <returns></returns>
 		internal static string MessageFile(DateTime? date = null) {
 			if (date == null) date = DateTime.Now;
 			return $"{messageDir}{date:yyyy-MM-dd}.xml";

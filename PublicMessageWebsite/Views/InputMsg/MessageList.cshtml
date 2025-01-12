@@ -1,0 +1,26 @@
+﻿@using static PublicMessageWebsite.DataCore;
+@using static PublicMessageWebsite.DataCore.DataFiles;
+@using static PublicMessageWebsite.UrlPath;
+<head>
+	<title>@config.Config.WebTitle</title>
+	<link rel="icon" href="@Img.Icon" type="image/x-icon">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<script src="https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+	<script src="https://fastly.jsdelivr.net/npm/marked@15.0.4/lib/marked.umd.min.js"></script>
+
+	<link rel="stylesheet" href="@Css.InputMsg.MessageList" type="text/css">
+	<script src="@Js.InputMsg.MessageList" type="text/javascript"></script>
+
+	<script>
+		const getMessageList_url="@GetMessageList";
+	</script>
+</head>
+<body>
+	<a href="@RootUrl" class="leftTop">返回</a>
+	<div class="mainBox">
+		<p>仅显示有效期内的留言：</p>
+		<div id="msglistBox"></div>
+	</div>
+</body>

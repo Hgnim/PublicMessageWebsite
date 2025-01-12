@@ -7,6 +7,22 @@
     top: 60%;
 }
 
+#inputBox {
+    text-align: center;
+    font-size: x-large;
+    width: 100%;
+}
+
+#nameBox {
+    text-align: center;
+    width: 70px;
+}
+
+.keepRight {
+    right: 0;
+    position: absolute;
+}
+
 .centerBox {
     width: 580px;
     height: auto;

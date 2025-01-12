@@ -1,6 +1,7 @@
 ﻿using System.Xml;
 using static PublicMessageWebsite.FilePath;
 using static PublicMessageWebsite.DataCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PublicMessageWebsite.Models
 {
@@ -116,13 +117,11 @@ namespace PublicMessageWebsite.Models
 				else return 1;
 			}
 			/// <summary>
-			/// 获取留言文本信息
+			/// 随机获取留言文本信息
 			/// </summary>
 			/// <param name="format">api输出格式</param>
-			/// <param name="index">信息序号，如果isRandom参数为true则无效</param>
-			/// <param name="isRandom">是否随机获取</param>
 			/// <returns></returns>
-			public static string MessageGet(string format = "来自\"{0}\"({1})的留言: {2}",int index=0,bool isRandom=true)
+			public static string MessageRandomGet(string format = "来自\"{0}\"({1})的留言: {2}")
 			{
 				XmlDocument msgReadDoc;
 				XmlNode msgReadRoot;
@@ -179,11 +178,7 @@ namespace PublicMessageWebsite.Models
 					msgfile_msg_xmlNL = msgReadRoot!.ChildNodes;
 					if (msgfile_msg_xmlNL.Count > 0)
 					{
-						if (isRandom)
-						{
-							index = new Random().Next(msgfile_msg_xmlNL.Count);
-						}
-						xmlEle = (XmlElement)msgfile_msg_xmlNL.Item(index)!;
+						xmlEle = (XmlElement)msgfile_msg_xmlNL.Item(new Random().Next(msgfile_msg_xmlNL.Count))!;
 						return 0;
 					}else return 1;
 				}
@@ -195,6 +190,46 @@ namespace PublicMessageWebsite.Models
 						);
 			nothing:;
 				return "(未找到留言)";
+			}
+
+			[method: SetsRequiredMembers]
+			internal struct MessageInfo() {
+				internal required string? Message { get; set; } = null;
+				internal required string? Name { get; set; } = null;
+				internal required DateTime? Time { get; set; } = null;
+				internal required string? Ip { get; set; } = null;
+			}
+			/// <summary>
+			/// 获取所有有效期内的留言信息
+			/// </summary>
+			/// <param name="getIp">是否获取IP信息</param>
+			/// <returns></returns>
+			internal static MessageInfo[] GetAllMessage(bool getIp=false) {
+				XmlDocument xmlDoc;
+				XmlNode xmlRoot;
+				XmlNodeList xmlNL;
+				List<MessageInfo> miList = [];
+
+				for(int i=0;i< DataFiles.config.Config.ApiOutputMsgDay; i++) {
+					xmlDoc = new();
+					xmlDoc.Load(MessageFile(DateTime.Now.AddDays(-i)));
+					xmlRoot = xmlDoc.SelectSingleNode("PublicMessageWebsite")?.SelectSingleNode("Message")!;
+					xmlNL = xmlRoot.ChildNodes;
+					XmlElement xmlE;
+					foreach (XmlNode xn in xmlNL)
+					{
+						xmlE = (XmlElement)xn;
+						MessageInfo mi = new() {
+							Message= xmlE.GetAttribute("message"),
+							Name=xmlE.GetAttribute("name"),
+							Time= DateTime.ParseExact(xmlE.GetAttribute("time"), "MM/dd HH:mm:ss:fff", System.Globalization.CultureInfo.InvariantCulture),
+						};
+						if (getIp)
+							mi.Ip = xmlE.GetAttribute("ip");
+						miList.Add(mi);
+					}
+				}
+				return [.. miList];
 			}
 		}
 

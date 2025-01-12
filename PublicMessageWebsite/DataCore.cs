@@ -1,4 +1,5 @@
-﻿using YamlDotNet.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using static PublicMessageWebsite.DataCore;
 
@@ -15,25 +16,7 @@ namespace PublicMessageWebsite {
 #pragma warning restore IDE0079
 	public struct DataCore {
 		public struct DataFiles {
-			public static DataFile.ConfigFile config=new() {
-				Config = new() {
-					WebTitle= "公共留言页面",
-					WebIcon="/img/icon.png",
-					Title= "欢迎来到公共留言页面，在此留下你想说的话:",
-					BottomText =$@"请勿发送任何违法内容！\\\n{PInfo.githubUrl_addHead}",
-					OneIpAddMessageFrequency =5,
-					ApiOutputMsgDay = 1
-				},
-				Website = new() {
-					Addr = "*",
-					UrlRoot = "/",
-					Port = 80,
-					UseHttps = false,
-					UseXFFRequestHeader = false
-				},
-				DebugOutput = false,
-				UpdateConfig = false
-			};
+			public static DataFile.ConfigFile config=new();
 		}
 
 		public struct UseUrlValue {
@@ -81,6 +64,27 @@ namespace PublicMessageWebsite {
 			DataCore.DataFiles.config = yamlD.Deserialize<ConfigFile>(File.ReadAllText(FilePath.configFile));
 		}
 		public struct ConfigFile {
+			[SetsRequiredMembers]
+			public ConfigFile() {
+				Config = new() {
+					WebTitle = "公共留言页面",
+					WebIcon = "/img/icon.png",
+					Title = "欢迎来到公共留言页面，在此留下你想说的话:",
+					BottomText = $@"请勿发送任何违法内容！\\\n{PInfo.githubUrl_addHead}",
+					OneIpAddMessageFrequency = 5,
+					ApiOutputMsgDay = 1,
+					ApiFormat = "来自\"{0}\"({1})的留言: {2}"
+				};
+				Website = new() {
+					Addr = "*",
+					UrlRoot = "/",
+					Port = 80,
+					UseHttps = false,
+					UseXFFRequestHeader = false
+				};
+				DebugOutput = false;
+				UpdateConfig = false;
+			}
 			public struct ConfigModel {
 				public required string WebTitle { get; set; }
 				public required string WebIcon { get; set; }
@@ -94,6 +98,10 @@ namespace PublicMessageWebsite {
 				/// API输出留言包含的天数，可输出历史多少天的留言
 				/// </summary>
 				public required int ApiOutputMsgDay { get; set; }
+				/// <summary>
+				/// API输出格式
+				/// </summary>
+				public required string ApiFormat { get; set; }
 			}
 			public required ConfigModel Config { get; set; }	
 			public struct WebsiteModel {

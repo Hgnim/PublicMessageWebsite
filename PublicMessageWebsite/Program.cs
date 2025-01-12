@@ -3,6 +3,7 @@ using System.Xml;
 using static PublicMessageWebsite.Models.CoreModel;
 using static PublicMessageWebsite.DataCore;
 using static PublicMessageWebsite.PInfo;
+using System.Reflection;
 
 namespace PublicMessageWebsite
 {
@@ -29,6 +30,46 @@ namespace PublicMessageWebsite
 
 				if (DataFiles.config.UpdateConfig == true) {
 					DataFiles.config.UpdateConfig = false;
+					{
+						/// <summary>
+						/// 将目标对象中可能包含null的属性替换为默认值
+						/// </summary>
+						/// <param name="targetObj">目标对象</param>
+						/// <param name="defaultObj">对象的默认属性值</param>
+						/// <exception cref="ArgumentException"></exception>
+						static void ReplaceNullWithDefault(ref object targetObj, object defaultObj) {
+							Type objType = targetObj.GetType();
+							if (objType != defaultObj.GetType())
+								throw new ArgumentException("被检查的目标对象和默认值对象必须是同一类型");
+							//遍历每个属性
+							foreach (PropertyInfo property in objType.GetProperties()) {
+								object? targetObjValue = property.GetValue(targetObj), defaultObjValue = property.GetValue(defaultObj);
+								//如果目标对象的属性值为null，则使用默认值
+								if (targetObjValue == null) {
+									property.SetValue(targetObj, defaultObjValue);
+								}
+								else if (
+									targetObjValue != null &&
+									!property.PropertyType.IsPrimitive &&
+									property.PropertyType != typeof(string)
+									) {
+									if (property.PropertyType.IsClass) {
+										//如果是类类型(class)，递归处理
+										ReplaceNullWithDefault(ref targetObjValue, defaultObjValue!);
+									}
+									else if (property.PropertyType.IsValueType) {
+										//如果属是值类型(struct)，递归处理
+										ReplaceNullWithDefault(ref targetObjValue, defaultObjValue!);
+										property.SetValue(targetObj, targetObjValue);
+									}
+								}
+							}
+						}
+
+						object checkObj = DataFiles.config;
+						ReplaceNullWithDefault( ref checkObj, new DataFile.ConfigFile());
+                        DataFiles.config = (DataFile.ConfigFile)checkObj;
+					}
 					DataFile.SaveData();
 					Console.WriteLine("配置文件已更新，已退出服务端");
 					return;

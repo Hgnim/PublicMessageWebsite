@@ -118,10 +118,11 @@ namespace PublicMessageWebsite.Models
 			/// <summary>
 			/// 获取留言文本信息
 			/// </summary>
+			/// <param name="format">api输出格式</param>
 			/// <param name="index">信息序号，如果isRandom参数为true则无效</param>
 			/// <param name="isRandom">是否随机获取</param>
 			/// <returns></returns>
-			public static string MessageGet(int index=0,bool isRandom=true)
+			public static string MessageGet(string format = "来自\"{0}\"({1})的留言: {2}",int index=0,bool isRandom=true)
 			{
 				XmlDocument msgReadDoc;
 				XmlNode msgReadRoot;
@@ -187,8 +188,12 @@ namespace PublicMessageWebsite.Models
 					}else return 1;
 				}
 				if(xmlEle!=null)
-					return	$"来自\"{xmlEle.GetAttribute("name")}\"({DateTime.ParseExact(xmlEle.GetAttribute("time"),"MM/dd HH:mm:ss:fff", System.Globalization.CultureInfo.InvariantCulture):MM-dd HH:mm:ss})的留言: {xmlEle.GetAttribute("message")}";
-nothing:;
+					return string.Format(format,
+						xmlEle.GetAttribute("name"),
+						DateTime.ParseExact(xmlEle.GetAttribute("time"), "MM/dd HH:mm:ss:fff", System.Globalization.CultureInfo.InvariantCulture).ToString("MM-dd HH:mm:ss"),
+						xmlEle.GetAttribute("message")
+						);
+			nothing:;
 				return "(未找到留言)";
 			}
 		}

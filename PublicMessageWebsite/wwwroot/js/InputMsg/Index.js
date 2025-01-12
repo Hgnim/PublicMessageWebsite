@@ -1,5 +1,54 @@
-﻿function sendButton_Click() {
+﻿$(function () {
+    document.getElementById('bottomBox').innerHTML = marked.parse(bottomText);
+});
+function sendButton_Click() {
     setCookie('userName', document.getElementById("nameBox").value);
+
+    function outputToast(id) {
+        let sendMsg;
+        switch (id) {
+            case 0:
+                sendMsg="发送成功";
+                break;
+            case 1:
+                sendMsg = "发送失败，已达到留言发送上限";
+                break;
+            case 2:
+                sendMsg = "发送失败，留言不能为空";
+                break;
+            case 3:
+                sendMsg = "发送失败，署名不能为空";
+                break;
+        }
+        showToast(sendMsg, undefined, "sendMsgToast");
+    }
+    const inputValue = document.getElementById("inputBox").value;
+    const nameValue = document.getElementById("nameBox").value
+
+
+    if (inputValue == "") 
+        outputToast(2);
+    else if (nameValue == "") 
+        outputToast(3);
+    else {
+        $.ajax({
+            url: theUrlRoot + '/InputMsg/SubmitMsg',
+            type: "POST",
+            contentType: "application/json",
+            setTimeout: 10000,
+            data: JSON.stringify(
+                {
+                    InputBoxValue: inputValue,
+                    NameBoxValue: nameValue
+                }),
+            success: function (response) {
+                outputToast(response.value);
+                if (response.value == 0) {
+                    document.getElementById("inputBox").value = "";
+                }
+            },
+        });
+    }
 }
 document.addEventListener('DOMContentLoaded', function () {
     {

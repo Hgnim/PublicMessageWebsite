@@ -1,0 +1,26 @@
+﻿p {
+    margin: 1px;
+    font-size: 0.9rem;
+}
+
+.sendMsgToast {
+    top: 60%;
+}
+
+.centerBox {
+    width: 580px;
+    height: auto;
+    top: calc(50% - 120px);
+    left: calc(50% - 290px);
+    position: absolute;
+    text-align: center
+}
+#bottomBox {
+    position: absolute;
+    bottom: 2px;
+    width: 60%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, 0);
+    word-wrap: break-word;
+}

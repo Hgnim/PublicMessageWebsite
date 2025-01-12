@@ -20,8 +20,7 @@ namespace PublicMessageWebsite {
 					WebTitle= "公共留言页面",
 					WebIcon="/img/icon.png",
 					Title= "欢迎来到公共留言页面，在此留下你想说的话:",
-					BottomText = "请勿发送任何违法内容！",
-					BottomText2 = $"{PInfo.githubUrl_addHead}",
+					BottomText =$@"请勿发送任何违法内容！\\\n{PInfo.githubUrl_addHead}",
 					OneIpAddMessageFrequency =5,
 					ApiOutputMsgDay = 1
 				},
@@ -40,7 +39,6 @@ namespace PublicMessageWebsite {
 			public static string WebTitle => DataFiles.config.Config.WebTitle;
 			public static string TextTitle => DataFiles.config.Config.Title;
 			public static string BottomText => DataFiles.config.Config.BottomText;
-			public static string BottomText2 => DataFiles.config.Config.BottomText2;
 		}
 		public struct Config {
 			/// <summary>
@@ -95,6 +93,7 @@ namespace PublicMessageWebsite {
 		/// </summary>
 		internal static void ReadData() {
 			IDeserializer yamlD = new DeserializerBuilder()
+				.IgnoreUnmatchedProperties()
 				.WithNamingConvention(CamelCaseNamingConvention.Instance)
 					.Build();
 
@@ -106,7 +105,6 @@ namespace PublicMessageWebsite {
 				public required string WebIcon { get; set; }
 				public required string Title { get; set; }
 				public required string BottomText { get; set; }
-				public required string BottomText2 { get; set; }
 				public required int OneIpAddMessageFrequency { get; set; }
 				public required int ApiOutputMsgDay { get; set; }
 			}
@@ -156,7 +154,11 @@ namespace PublicMessageWebsite {
 			}
 		}
 		internal struct Css {
-			private static string Dir => $"{UseUrlValue.UrlRoot}/css/";
+			private static string RootDir => $"{UseUrlValue.UrlRoot}/css/";
+			internal struct InputMsg {
+				private static string Dir => $"{RootDir}InputMsg/";
+				internal static string Index => $"{Dir}Index.css";
+			}
 		}
 		internal struct Js {
 			private static string RootDir => $"{UseUrlValue.UrlRoot}/js/";

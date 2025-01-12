@@ -20,12 +20,6 @@
 	  <AssemblyName>pmw_server</AssemblyName>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="pmw_data\**" />
-    <Content Remove="pmw_data\**" />
-    <EmbeddedResource Remove="pmw_data\**" />
-    <None Remove="pmw_data\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="YamlDotNet" Version="16.2.1" />
@@ -38,6 +32,9 @@
     <Content Update="wwwroot\js\InputMsg\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+	<Content Update="wwwroot\css\InputMsg\*">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
   </ItemGroup>
 
 </Project>

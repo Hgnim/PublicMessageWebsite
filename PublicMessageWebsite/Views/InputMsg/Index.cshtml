@@ -1,37 +1,41 @@
 ﻿@using static PublicMessageWebsite.DataCore;
+@using static PublicMessageWebsite.DataCore.DataFiles;
 @using static PublicMessageWebsite.UrlPath;
 <head>
 	<title>@PageInfo.WebTitle</title>
 	<link rel="icon" href="@Img.Icon" type="image/x-icon">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<script src="https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/hgnim/WebSimpleToast@1.0.0/dist/css/toast.min.css" type="text/css">
+	<script src="https://fastly.jsdelivr.net/gh/hgnim/WebSimpleToast@1.0.0/dist/js/toast.min.js" type="text/javascript"></script>
+
+	<script src="https://fastly.jsdelivr.net/npm/marked@15.0.4/lib/marked.umd.min.js"></script>
+
+	<link rel="stylesheet" href="@Css.InputMsg.Index" type="text/css">
 	<script src="@Js.InputMsg.Index" type="text/javascript"></script>
+
+	<script>
+		var theUrlRoot = "@config.Website.UrlRoot";
+		var bottomText="@PageInfo.BottomText"
+	</script>
 </head>
 <body style="overflow:hidden"> 
-	<div style="width:580px;height:auto;top: calc(50% - 120px);left: calc(50% - 290px);position: absolute;text-align:center">
-	<h4>@PageInfo.TextTitle</h4>
-	<form method="post" action="@SubmitMsg">		
+	<div class="centerBox">
+	<h4>@PageInfo.TextTitle</h4>	
 		<div>
 			<label>留言：</label>
-				<input type="text" name="inputBox" id="inputBox" value="@ViewData["inputBoxValue"]" autoComplete="off" />
+				<input type="text" name="inputBox" id="inputBox" autoComplete="off" />
 		</div>
 		<div>
 			<label>署名：</label>
-				<input type="text" name="nameBox" id="nameBox" value="@ViewData["nameBoxValue"]" autoComplete="on" />
+				<input type="text" name="nameBox" id="nameBox" autoComplete="on" />
 		</div>
 		<br/>
 		<button type="submit" onclick="sendButton_Click()">发送</button>
 		<br />
 		<p>@ViewData["outputText"]</p>
-	</form>
 	</div>
-	<style>
-		p{
-			margin: 1px;
-			font-size: 0.9rem;
-		}
-	</style>
-	<div style="position: absolute;bottom: 2px;width:100%;text-align:center">
-		<p>@PageInfo.BottomText</p>
-		<p>@PageInfo.BottomText2</p>
-	</div>
+	<div id="bottomBox"></div>
 </body>

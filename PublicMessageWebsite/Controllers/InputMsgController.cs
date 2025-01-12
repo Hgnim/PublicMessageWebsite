@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using static PublicMessageWebsite.Models.CoreModel;
 using static PublicMessageWebsite.DataCore;
+using PublicMessageWebsite.Models;
+using static PublicMessageWebsite.Models.InputMsgModels;
 
 namespace PublicMessageWebsite.Controllers
 {
@@ -12,51 +14,38 @@ namespace PublicMessageWebsite.Controllers
 			FileEditer.LogAddAsync($"[{GetClientIP()}]获取[InputMsg/Index]页面");            
             return View("Index");
         }
-
-        [Route("InputMsg/SendSucceed")]
-        public IActionResult SendSucceed()
-        {
-            return View();
-        }
         [HttpPost]
-        public IActionResult SubmitMsg(string inputBox,string nameBox)
+        public IActionResult SubmitMsg([FromBody] SubmitMsgModel data)
         {
-            int msgaddBackValue = -1;
-			if (inputBox == null ||inputBox=="")
+            int retValue=-1;
+			if (data.InputBoxValue is null or "")
             {
-				ViewBag.outputText = "发送失败，留言不能为空";
-            }
-            else if (nameBox == null || nameBox=="")
-            {
-				ViewBag.outputText = "发送失败，署名不能为空";
-            }
-            else
-            {
-               msgaddBackValue=  FileEditer.MessageAdd(inputBox, nameBox, GetClientIP());
-				ViewBag.outputText = msgaddBackValue switch
-				{
-					0 => "发送成功",
-					1 => "发送失败，已达到留言发送上限",
-					_ => "发生未知错误",
-				};
+                retValue = 2;//发送失败，留言不能为空
+				goto ret;
 			}
-            if (msgaddBackValue!=0)
+            else if (data.NameBoxValue is null or "")
             {
-                ViewBag.inputBoxValue = inputBox;
-                ViewBag.nameBoxValue = nameBox;
+				retValue = 3;//发送失败，署名不能为空
+                goto ret;
             }
-            FileEditer.LogAddAsync
-            ($"[{GetClientIP()}]点击了[InputMsg/Index]页面的发送按钮。发送内容: {{留言: {inputBox}; 署名: {nameBox}}}。返回代码: {msgaddBackValue}");
-            if(msgaddBackValue==0)
-                return Redirect(UrlPath.SendSucceed);
             else
-            return View("Index");            
-        }
-        [HttpPost]
-        public IActionResult BackMain()
-        {
-            return Redirect(UrlPath.RootUrl);
-        }
+            {
+               switch( FileEditer.MessageAdd(data.InputBoxValue, data.NameBoxValue, GetClientIP())) {
+                    case 0:
+						retValue = 0 ;//发送成功
+                        goto ret;
+					case 1:
+						retValue = 1;//发送失败，已达到留言发送上限
+                        goto ret;
+                }
+			}
+
+        ret:;
+            FileEditer.LogAddAsync
+            ($"[{GetClientIP()}]点击了[InputMsg/Index]页面的发送按钮。发送内容: {{留言: {data.InputBoxValue}; 署名: {data.NameBoxValue}}}。返回代码: {retValue}");
+
+			return Json(new { value = retValue});//未知错误
+		}
         [Route("api")]
         public string Api()
         {

@@ -211,23 +211,24 @@ namespace PublicMessageWebsite.Models
 				List<MessageInfo> miList = [];
 
 				for(int i=0;i< DataFiles.config.Config.ApiOutputMsgDay; i++) {
-					xmlDoc = new();
-					xmlDoc.Load(MessageFile(DateTime.Now.AddDays(-i)));
-					xmlRoot = xmlDoc.SelectSingleNode("PublicMessageWebsite")?.SelectSingleNode("Message")!;
-					xmlNL = xmlRoot.ChildNodes;
-					XmlElement xmlE;
-					foreach (XmlNode xn in xmlNL)
-					{
-						xmlE = (XmlElement)xn;
-						MessageInfo mi = new() {
-							Message= xmlE.GetAttribute("message"),
-							Name=xmlE.GetAttribute("name"),
-							Time= DateTime.ParseExact(xmlE.GetAttribute("time"), "MM/dd HH:mm:ss:fff", System.Globalization.CultureInfo.InvariantCulture),
-						};
-						if (getIp)
-							mi.Ip = xmlE.GetAttribute("ip");
-						miList.Add(mi);
-					}
+					try {
+						xmlDoc = new();
+						xmlDoc.Load(MessageFile(DateTime.Now.AddDays(-i)));
+						xmlRoot = xmlDoc.SelectSingleNode("PublicMessageWebsite")?.SelectSingleNode("Message")!;
+						xmlNL = xmlRoot.ChildNodes;
+						XmlElement xmlE;
+						foreach (XmlNode xn in xmlNL) {
+							xmlE = (XmlElement)xn;
+							MessageInfo mi = new() {
+								Message = xmlE.GetAttribute("message"),
+								Name = xmlE.GetAttribute("name"),
+								Time = DateTime.ParseExact(xmlE.GetAttribute("time"), "MM/dd HH:mm:ss:fff", System.Globalization.CultureInfo.InvariantCulture),
+							};
+							if (getIp)
+								mi.Ip = xmlE.GetAttribute("ip");
+							miList.Add(mi);
+						}
+					} catch { }
 				}
 				return [.. miList];
 			}

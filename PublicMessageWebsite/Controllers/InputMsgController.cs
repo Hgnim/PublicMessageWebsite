@@ -53,12 +53,9 @@ namespace PublicMessageWebsite.Controllers
 			return FileEditer.MessageGet();
         }
 
-        string GetClientIP()
-        {
-            if (Config.UseXFFRequestHeader)
-                return Request.Headers["X-Forwarded-For"].ToString();
-            else
-                return HttpContext.Connection.RemoteIpAddress!.ToString();
-		}
-    }
+		string GetClientIP() => 
+            DataFiles.config.Website.UseXFFRequestHeader
+				? Request.Headers["X-Forwarded-For"].ToString()
+				: HttpContext.Connection.RemoteIpAddress!.ToString();
+	}
 }

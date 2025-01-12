@@ -83,7 +83,7 @@ namespace PublicMessageWebsite.Models
 					if (ip == xmlEle.GetAttribute("ip"))
 						ipAddMsgNum =int.Parse(xmlEle.GetAttribute("num"));
 				}
-				if (ipAddMsgNum < Config.IpAddMsgFrequency)
+				if (ipAddMsgNum < DataFiles.config.Config.OneIpAddMessageFrequency)
 				{
 					if (ipAddMsgNum == 0)
 					{
@@ -128,12 +128,12 @@ namespace PublicMessageWebsite.Models
 				XmlNodeList msgfile_msg_xmlNL;
 				XmlElement xmlEle=null!;
 
-				if (Config.ApiOutputMsgDay != 1)
+				if (DataFiles.config.Config.ApiOutputMsgDay != 1)
 				{
 					List<int> randomFileIndex = [];
-					while (!(randomFileIndex.Count >= Config.ApiOutputMsgDay))
+					while (!(randomFileIndex.Count >= DataFiles.config.Config.ApiOutputMsgDay))
 					{
-						int randomNum = new Random().Next(Config.ApiOutputMsgDay);
+						int randomNum = new Random().Next(DataFiles.config.Config.ApiOutputMsgDay);
 						bool isHave = false;//表示是否已包含
 						foreach (int i in randomFileIndex)
 						{

@@ -35,25 +35,6 @@ namespace PublicMessageWebsite {
 				UpdateConfig = false
 			};
 		}
-		public struct PageInfo {
-			public static string WebTitle => DataFiles.config.Config.WebTitle;
-			public static string TextTitle => DataFiles.config.Config.Title;
-			public static string BottomText => DataFiles.config.Config.BottomText;
-		}
-		public struct Config {
-			/// <summary>
-			/// 每一个ip在当前周期内可添加留言的次数
-			/// </summary>
-			public static int IpAddMsgFrequency => DataFiles.config.Config.OneIpAddMessageFrequency;
-			/// <summary>
-			/// 是否启用 X-Forwarded-For(XFF)请求标头
-			/// </summary>
-			public static bool UseXFFRequestHeader => DataFiles.config.Website.UseXFFRequestHeader;
-			/// <summary>
-			/// API输出留言包含的天数，可输出历史多少天的留言
-			/// </summary>
-			public static int ApiOutputMsgDay => DataFiles.config.Config.ApiOutputMsgDay;
-		}
 
 		public struct UseUrlValue {
 			public static bool IsHttps => DataFiles.config.Website.UseHttps;
@@ -105,7 +86,13 @@ namespace PublicMessageWebsite {
 				public required string WebIcon { get; set; }
 				public required string Title { get; set; }
 				public required string BottomText { get; set; }
+				/// <summary>
+				/// 每一个ip在当前周期内可添加留言的次数
+				/// </summary>
 				public required int OneIpAddMessageFrequency { get; set; }
+				/// <summary>
+				/// API输出留言包含的天数，可输出历史多少天的留言
+				/// </summary>
 				public required int ApiOutputMsgDay { get; set; }
 			}
 			public required ConfigModel Config { get; set; }	
@@ -131,6 +118,9 @@ namespace PublicMessageWebsite {
 					} }
 				public required int Port { get; set; }
 				public required bool UseHttps { get; set; }
+				/// <summary>
+				/// 是否启用 X-Forwarded-For(XFF)请求标头
+				/// </summary>
 				public required bool UseXFFRequestHeader { get; set; }
 			}
 			public required WebsiteModel Website { get; set; }

@@ -2,7 +2,7 @@
 @using static PublicMessageWebsite.DataCore.DataFiles;
 @using static PublicMessageWebsite.UrlPath;
 <head>
-	<title>@PageInfo.WebTitle</title>
+	<title>@config.Config.WebTitle</title>
 	<link rel="icon" href="@Img.Icon" type="image/x-icon">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -18,12 +18,12 @@
 
 	<script>
 		var theUrlRoot = "@config.Website.UrlRoot";
-		var bottomText="@PageInfo.BottomText"
+		var bottomText="@config.Config.BottomText"
 	</script>
 </head>
 <body style="overflow:hidden"> 
 	<div class="centerBox">
-	<h4>@PageInfo.TextTitle</h4>	
+		<h4>@config.Config.Title</h4>
 		<div>
 			<label>留言：</label>
 				<input type="text" name="inputBox" id="inputBox" autoComplete="off" />
